@@ -4,7 +4,7 @@ import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import { db } from "./db";
 export const authOptions: NextAuthOptions = {
     adapter:PrismaAdapter(db), 
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXT_PUBLIC_SECRET,
     session:{
         strategy:'jwt'
     },
