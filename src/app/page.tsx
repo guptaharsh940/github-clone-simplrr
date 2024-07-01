@@ -2,43 +2,66 @@
 import Navbar from "@/components/customui/navbar";
 import Repocard from "@/components/customui/repocard";
 import Sidebar from "@/components/customui/sidebar";
-import Image from "next/image";
-import { useSession, getSession } from "next-auth/react"
+import Loader from "@/components/loader";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+interface Post {
+  id: string;
+  title: string;
+  description?: string;
+  published: boolean;
+  authorId: string;
+  stars: number;
+  language: string;
+  createdAt: string;
+  // Add more properties as needed
+}
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [posts, setPosts] = useState<Post[] | never>([]);
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/signin");
     }
   }, [status, router]);
 
+
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('/api/posts');
+      const data = await response.json();
+      setPosts(data);
+    };
+
+    fetchPosts();
+  }, []);
+
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <Loader/>;
   }
 
   if (status === "unauthenticated") {
-    return <p>Redirecting...</p>;
+    return <Loader/>;
   }
-
 
   return (
     <div>
-      <Navbar/>
-      <div className="mt-20 flex flex-row">
-        
-      <Sidebar/>
-
-      <div className="flex ml-[400px]">
-        <div className="">
-        <Repocard/>
-        <Repocard/>
-        <Repocard/>
-        <Repocard/>
+      <Navbar />
+      <div className="flex mt-20 flex-row">
+        <div className="hidden lg:flex">
+        <Sidebar />
         </div>
-      </div>
+        <div className="flex  lg:w-3/4 lg:ml-auto md:w-full sm:w-full">
+          <div className="flex flex-col w-full">
+            {posts.map((post) =>
+              <Repocard key={post.id} post={post} />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
