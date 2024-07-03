@@ -2,8 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## TRY OUT
 Click on the - [Link](https://github-clone-simplrr.vercel.app/)
+
 Login Credentials
+
 Username - testuser
+
 Password - testuser
 
 You can also create new users by signing up and sign in using that. Create a new repository and star any repository. You can view all the repsoitories created by other users.
