@@ -27,11 +27,20 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-
+interface Filter{
+    isUser:boolean;
+    isStarredRepo:boolean;
+    lang:string;
+  }
+interface ChildComponentProps {
+    filter: Filter;
+    setFilter: React.Dispatch<React.SetStateAction<Filter>>;
+}
+  
 import { signOut, useSession } from 'next-auth/react'
 import NewRepoForm from '../form/newrepo';
 import Sidebar from './sidebar';
-const Navbar = () => {
+const Navbar: React.FC<ChildComponentProps> = ({setFilter,filter}) => {
     const session = useSession();
     return (
         <div className='top-0 left = 0 w-screen fixed min-h-20 flex  border-b border-gray-700 bg-black'>
@@ -41,7 +50,7 @@ const Navbar = () => {
                         <HamburgerMenuIcon />
                     </Button></SheetTrigger>
                     <SheetContent side={"left"}>
-                        <Sidebar />
+                        <Sidebar  setFilter={setFilter} filter={filter}/>
                     </SheetContent>
                 </Sheet>
 

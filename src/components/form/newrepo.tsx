@@ -36,6 +36,7 @@ import { useRouter } from "next/navigation"
 import { Input } from "../ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
+type ProgrammingLanguage = 'Java' | 'C++' | 'Python' | 'TypeScript';
 
 const formSchema = z.object({
     repoName: z.string()
@@ -49,6 +50,7 @@ const formSchema = z.object({
 
 const NewRepoForm = () => {
     const session =useSession();
+    const [lang,setlang] = useState<ProgrammingLanguage>('Java');
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -66,6 +68,7 @@ const NewRepoForm = () => {
         
         let val = {...values, userId:""}
         val.userId = session.data?.user?.id ? session.data.user.id : "null";
+        val.language = lang;
         
 
         const response = await fetch('/api/repo', {
@@ -119,7 +122,7 @@ const NewRepoForm = () => {
                                     name="language"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <Select>
+                                            <Select onValueChange={(e:ProgrammingLanguage)=>(setlang(e))}>
                                             <SelectTrigger>
                                             <SelectValue placeholder="Select a Language" />
                                             </SelectTrigger>

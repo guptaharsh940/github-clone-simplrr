@@ -5,8 +5,34 @@ import { authOptions } from '@/lib/auth';
 import { useSession } from 'next-auth/react';
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select,SelectContent,SelectItem,SelectTrigger, SelectValue } from "@/components/ui/select"
-const Sidebar = () => {
+interface Filter{
+    isUser:boolean;
+    isStarredRepo:boolean;
+    lang:string;
+  }
+interface ChildComponentProps {
+    filter: Filter;
+    setFilter: React.Dispatch<React.SetStateAction<Filter>>;
+}
+  
+const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
+
     const session = useSession();
+    const handleMyRepo=(e:boolean|string)=>{
+        if(e === true||e===false){
+            setFilter({...filter,isUser:e})
+        }
+        
+    }
+    const handleStarredRepo=(e:boolean|string)=>{
+        if(e === true||e===false){
+            setFilter({...filter,isStarredRepo:e})
+        }
+        
+    }
+    const handleSetLang= (e:string)=>{
+        setFilter({...filter,lang:e})
+    }
     return (
         <div className='min-h-screen fixed mr-auto border-r border-gray-700 lg:w-1/4 w-full flex flex-col'>
             <div className='m-5 h-16 space-x-3 p-3 flex items-center'>
@@ -18,7 +44,7 @@ const Sidebar = () => {
             <div className='m-5 p-3'>
                 <p className='text-xl font-bold'>Filter Options:</p>
                 <div className='flex space-x-2 items-center mt-3'>                
-                    <Checkbox id="myrepo" />
+                    <Checkbox id="myrepo" onCheckedChange={(e)=>{handleMyRepo(e)}}/>
                     <label
                         htmlFor="terms"
                         className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -27,7 +53,7 @@ const Sidebar = () => {
                     </label>
                     </div>
                 <div className='flex space-x-2 items-center mt-3'>                
-                    <Checkbox id="myrepo" />
+                    <Checkbox id="starredrepo"  onCheckedChange={(e)=>{handleStarredRepo(e)}}/>
                     <label
                         htmlFor="terms"
                         className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -38,7 +64,7 @@ const Sidebar = () => {
                 
             <p className='text-lg font-bold my-5'>Based on Language:</p>
             <div className='flex w-fit'>
-                    <Select>
+                    <Select onValueChange={(e)=>(handleSetLang(e))}>
                         <SelectTrigger>
                         <SelectValue placeholder="Select a Language" />
                         </SelectTrigger>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons';
-
 interface Post {
     id: string;
     title: string;
@@ -13,7 +12,7 @@ interface Post {
     createdAt:string;
     // Add more properties as needed
 }
-const Starbutton:React.FC<{post:Post}> = ({post}) => {
+const Starbutton:React.FC<{post:Post; userId:String;}> = ({post,userId}) => {
     const [isStar,setIsStar] = useState<boolean>(false);
     useEffect(() => {
         fetch("/api/checkstar", {
@@ -21,7 +20,7 @@ const Starbutton:React.FC<{post:Post}> = ({post}) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ authorId: post.authorId, postId: post.id })
+            body: JSON.stringify({ authorId: userId, postId: post.id })
         })
         .then((res) => res.json())
         .then((data) => {
@@ -35,7 +34,7 @@ const Starbutton:React.FC<{post:Post}> = ({post}) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({isStar:isStar,authorId:post.authorId,postId:post.id})
+            body: JSON.stringify({isStar:isStar,authorId:userId,postId:post.id})
         })
         setIsStar(!isStar)
     }

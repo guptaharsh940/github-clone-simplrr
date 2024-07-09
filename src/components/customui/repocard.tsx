@@ -25,9 +25,10 @@ interface Post {
 }
 interface RepocardProps {
     post: Post;
+    userId:String;
 }
 
-const Repocard:React.FC<RepocardProps> =  ({ post }) => {
+const Repocard:React.FC<RepocardProps> =  ({ post, userId }) => {
     const [usern,setUser] = useState<string>("");
     
     useEffect(()=>{fetch("/api/getuser",{
@@ -40,7 +41,7 @@ const Repocard:React.FC<RepocardProps> =  ({ post }) => {
 
             
 
-    })
+    },[])
 
     
     const isoDateString = post.createdAt;
@@ -61,7 +62,7 @@ const relativeTime = formatDistanceToNow(date, { addSuffix: true });
                             </div>
                         </div>
                         <div className='lg:w-1/6  md:w-1/12 lg:mr-0 md:mr-8 h-16 ml-auto flex items-center '>
-                            <Starbutton post={post}/>
+                            <Starbutton post={post} userId={userId}/>
                         </div>
                     </div>
                 </CardHeader>
