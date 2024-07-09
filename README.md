@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## TRY OUT
+Click on the - [Link](https://github-clone-simplrr.vercel.app/)
+
+Login Credentials
+
+Username - testuser
+
+Password - testuser
+
+You can also create new users by signing up and sign in using that. Create a new repository and star any repository. You can view all the repsoitories created by other users.
+
+
+
 ## Getting Started
 
 First, run the development server:
