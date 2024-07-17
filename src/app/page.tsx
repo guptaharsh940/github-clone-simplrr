@@ -39,22 +39,22 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       const params = new URLSearchParams({
-        id: session?.user?.id ? (session?.user?.id):("Null"),
-        isUser: filter.isUser?("True"):("Null"),
-        language:filter.lang,
-        isStar:filter.isStarredRepo?('True'):("False"),
+        id: session?.user?.id ? (session?.user?.id) : ("Null"),
+        isUser: filter.isUser ? ("True") : ("Null"),
+        language: filter.lang,
+        isStar: filter.isStarredRepo ? ('True') : ("False"),
         // Add more parameters as needed
       });
       const response = await fetch(`/api/posts?${params.toString()}`);
       const data = await response.json();
       setPosts(data);
-      
     };
 
-    const intervalId = setInterval(fetchPosts, 1000); // Call every 1 second
+    fetchPosts(); // Fetch immediately on mount/update
 
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
+    const intervalId = setInterval(fetchPosts, 20000); // Fetch every 20 seconds
+
+    return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, [session, filter]);
 
   if (status === "loading") {

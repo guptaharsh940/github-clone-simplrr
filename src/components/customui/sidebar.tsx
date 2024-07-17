@@ -44,7 +44,7 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
             <div className='m-5 p-3'>
                 <p className='text-xl font-bold'>Filter Options:</p>
                 <div className='flex space-x-2 items-center mt-3'>                
-                    <Checkbox id="myrepo" onCheckedChange={(e)=>{handleMyRepo(e)}}/>
+                    <Checkbox id="myrepo" onCheckedChange={(e)=>{handleMyRepo(e)}} checked={filter.isUser}/>
                     <label
                         htmlFor="terms"
                         className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -53,7 +53,7 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
                     </label>
                     </div>
                 <div className='flex space-x-2 items-center mt-3'>                
-                    <Checkbox id="starredrepo"  onCheckedChange={(e)=>{handleStarredRepo(e)}}/>
+                    <Checkbox id="starredrepo"  onCheckedChange={(e)=>{handleStarredRepo(e)}} checked={filter.isStarredRepo}/>
                     <label
                         htmlFor="terms"
                         className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -64,9 +64,10 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
                 
             <p className='text-lg font-bold my-5'>Based on Language:</p>
             <div className='flex w-fit'>
-                    <Select onValueChange={(e)=>(handleSetLang(e))}>
+                    <Select onValueChange={(e)=>(handleSetLang(e))} value={filter.lang=='Null'?"":filter.lang}>
                         <SelectTrigger>
-                        <SelectValue placeholder="Select a Language" />
+                        <SelectValue  placeholder="Select a Language"/>
+                        
                         </SelectTrigger>
                             <SelectContent >
                                 <SelectItem value="Java" >Java</SelectItem>
