@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db'; // Adjust the import according to your project structure
+import { Prisma } from '@prisma/client';
 
 export async function GET(req: Request) {
     try {
@@ -8,6 +9,7 @@ export async function GET(req: Request) {
         const id = url.searchParams.get('id')
         const isStar = url.searchParams.get('isStar')
         const isUser = url.searchParams.get('isUser')
+        const sortBy = url.searchParams.get('sortBy')
         const whereClause: any = {};
         if (language!='Null') {
             whereClause.language = language;
@@ -29,9 +31,19 @@ export async function GET(req: Request) {
             whereClause.id = {in:postIds};
     
         }
-        
+        let ob:Prisma.PostOrderByWithRelationInput = {createdAt:'desc'};
+        if(sortBy==='timeAsc'){
+            ob = {createdAt:'asc'};
+        }
+        else if(sortBy==='starDesc'){
+            ob = {stars:'desc'};
+        }
+        else if(sortBy==='starAsc'){
+            ob = {stars:'asc'}
+        }
         const posts = await db.post.findMany({
-            where:whereClause
+            where:whereClause,
+            orderBy:ob
         });
         return NextResponse.json(posts, { status: 200 });
     } catch (error) {

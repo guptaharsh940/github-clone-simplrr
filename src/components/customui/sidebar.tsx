@@ -9,6 +9,7 @@ interface Filter{
     isUser:boolean;
     isStarredRepo:boolean;
     lang:string;
+    sortby:string;
   }
 interface ChildComponentProps {
     filter: Filter;
@@ -32,6 +33,9 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
     }
     const handleSetLang= (e:string)=>{
         setFilter({...filter,lang:e})
+    }
+    const handleSort = (e:string)=>{
+        setFilter({...filter,sortby:e})
     }
     return (
         <div className='min-h-screen fixed mr-auto border-r border-gray-700 lg:w-1/4 w-full flex flex-col'>
@@ -77,7 +81,23 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
                             </SelectContent>
                         </Select>
                         </div>
-            </div>
+            
+            <p className='text-lg font-bold my-5'>Sort By</p>
+            <div className='flex w-fit'>
+                    <Select onValueChange={(e)=>(handleSort(e))} value={filter.sortby}>
+                        <SelectTrigger>
+                        <SelectValue  placeholder="Sort By"/>
+                        
+                        </SelectTrigger>
+                            <SelectContent >
+                                <SelectItem value="timeDesc" >Latest First</SelectItem>
+                                <SelectItem value="timeAsc" >Oldest First</SelectItem>
+                                <SelectItem value="starDesc" >Highest Starred</SelectItem>
+                                <SelectItem value="starAsc" >Lowest Starred</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        </div>
+                        </div>
 
 
         </div>

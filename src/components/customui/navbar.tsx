@@ -31,6 +31,7 @@ interface Filter{
     isUser:boolean;
     isStarredRepo:boolean;
     lang:string;
+    sortby:string;
   }
 interface ChildComponentProps {
     filter: Filter;

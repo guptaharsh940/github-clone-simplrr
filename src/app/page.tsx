@@ -22,6 +22,7 @@ interface Filter{
   isUser:boolean;
   isStarredRepo:boolean;
   lang:string;
+  sortby:string;
 }
 export default function Home() {
   const { data: session, status } = useSession();
@@ -34,7 +35,7 @@ export default function Home() {
     }
   }, [status, router]);
 
-  const [filter,setFilter] = useState<Filter>({isUser:false,isStarredRepo:false,lang:'Null'});
+  const [filter,setFilter] = useState<Filter>({isUser:false,isStarredRepo:false,lang:'Null',sortby:'timeDesc'});
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,6 +44,7 @@ export default function Home() {
         isUser: filter.isUser ? ("True") : ("Null"),
         language: filter.lang,
         isStar: filter.isStarredRepo ? ('True') : ("False"),
+        sortBy: filter.sortby,
         // Add more parameters as needed
       });
       const response = await fetch(`/api/posts?${params.toString()}`);
