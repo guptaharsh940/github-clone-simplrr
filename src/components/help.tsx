@@ -39,11 +39,10 @@ const Help = () => {
                             <li>Adding a new Repository</li>
                             <li>Starring a Repository</li>
                             <li>Creating a new user</li>
-                            <li>Filter</li>
+                            <li>Filter & Sort</li>
                         </ul>
                         <li>Currently the features which are not working are </li>
                         <ul className='text-muted-foreground ml-3'>
-                            <li>Sort</li>
                             <li>Search</li>
                             <li>Editing a user</li>
                             <li>Deleting a repository</li>

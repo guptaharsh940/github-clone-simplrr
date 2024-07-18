@@ -90,10 +90,10 @@ const Sidebar: React.FC<ChildComponentProps>  = ({setFilter,filter}) => {
                         
                         </SelectTrigger>
                             <SelectContent >
-                                <SelectItem value="timeDesc" >Latest First</SelectItem>
+                                <SelectItem value="timeDesc" >Newest First</SelectItem>
                                 <SelectItem value="timeAsc" >Oldest First</SelectItem>
-                                <SelectItem value="starDesc" >Highest Starred</SelectItem>
-                                <SelectItem value="starAsc" >Lowest Starred</SelectItem>
+                                <SelectItem value="starDesc" >Most Starred</SelectItem>
+                                <SelectItem value="starAsc" >Least Starred</SelectItem>
                             </SelectContent>
                         </Select>
                         </div>
